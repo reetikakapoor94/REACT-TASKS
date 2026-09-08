@@ -2,51 +2,61 @@ import { useState } from "react";
 import "./FormTask.css";
 
 // ============================================================
-//  TASK 5: Form Validation
-// ============================================================
-//
-//  What you need to implement:
-//  validate(fields) - A function that checks all fields and returns
-//                     an errors object. If a field is invalid, add a
-//                     key for it: { fieldName: "error message" }
-//
-//  Rules to enforce:
-//  - name:     required, at least 2 characters
-//  - email:    required, must contain "@" and "."
-//  - password: required, at least 8 characters
-//  - confirm:  required, must match fields.password exactly
-//  - age:      required, must be a number between 18 and 99
-//
-//  Example return value when name is empty and passwords don't match:
-//    { name: "Name is required.", confirm: "Passwords do not match." }
-//
-//  Hints:
-//  - Check if a string is empty: value.trim() === ""
-//  - Simple email check: value.includes("@") && value.includes(".")
-//  - Convert age to number: Number(value) or parseInt(value)
-//
-//  Bonus challenges:
-//  ★  Show a password strength indicator (weak / medium / strong)
-//  ★★ Validate on every keystroke (not just on submit)
-//  ★★★ Add a "terms and conditions" checkbox that is also required
+// TASK 5: Form Validation
 // ============================================================
 
-const emptyFields = { name: "", email: "", password: "", confirm: "", age: "" };
+const emptyFields = {
+  name: "",
+  email: "",
+  password: "",
+  confirm: "",
+  age: "",
+};
 
 function validate(fields) {
   const errors = {};
 
-  // TODO: Check each field and add to errors if invalid
+  // Name: required and at least 2 characters
+  if (fields.name.trim() === "") {
+    errors.name = "Name is required.";
+  } else if (fields.name.trim().length < 2) {
+    errors.name = "Name must be at least 2 characters.";
+  }
 
-  // name: required and at least 2 characters
+  // Email: required and must contain @ and .
+  if (fields.email.trim() === "") {
+    errors.email = "Email is required.";
+  } else if (
+    !fields.email.includes("@") ||
+    !fields.email.includes(".")
+  ) {
+    errors.email = "Please enter a valid email address.";
+  }
 
-  // email: required and must look like an email (contains @ and .)
+  // Password: required and at least 8 characters
+  if (fields.password === "") {
+    errors.password = "Password is required.";
+  } else if (fields.password.length < 8) {
+    errors.password = "Password must be at least 8 characters.";
+  }
 
-  // password: required and at least 8 characters
+  // Confirm password: required and must match password
+  if (fields.confirm === "") {
+    errors.confirm = "Please confirm your password.";
+  } else if (fields.confirm !== fields.password) {
+    errors.confirm = "Passwords do not match.";
+  }
 
-  // confirm: required and must match fields.password
+  // Age: required and must be between 18 and 99
+  if (fields.age.trim() === "") {
+    errors.age = "Age is required.";
+  } else {
+    const age = Number(fields.age);
 
-  // age: required and must be between 18 and 99
+    if (isNaN(age) || age < 18 || age > 99) {
+      errors.age = "Age must be a number between 18 and 99.";
+    }
+  }
 
   return errors;
 }
@@ -57,18 +67,41 @@ export default function FormTask() {
   const [submitted, setSubmitted] = useState(false);
 
   function handleChange(e) {
-    setFields({ ...fields, [e.target.name]: e.target.value });
-    if (errors[e.target.name]) {
-      setErrors({ ...errors, [e.target.name]: "" });
+    const { name, value } = e.target;
+
+    setFields({
+      ...fields,
+      [name]: value,
+    });
+
+    // Remove error as soon as user starts correcting the field
+    if (errors[name]) {
+      setErrors({
+        ...errors,
+        [name]: "",
+      });
+    }
+
+    // If confirm password changes, also clear confirm error
+    if (name === "password" && errors.confirm) {
+      setErrors({
+        ...errors,
+        password: "",
+        confirm: "",
+      });
     }
   }
 
   function handleSubmit(e) {
     e.preventDefault();
+
     const validationErrors = validate(fields);
+
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
+      setSubmitted(false);
     } else {
+      setErrors({});
       setSubmitted(true);
     }
   }
@@ -83,9 +116,18 @@ export default function FormTask() {
     return (
       <div className="form-success">
         <div className="success-icon">🎉</div>
+
         <h3>Registration Successful!</h3>
-        <p>Welcome, <strong>{fields.name}</strong>! Your account has been created.</p>
-        <button className="btn btn-primary" onClick={handleReset}>
+
+        <p>
+          Welcome, <strong>{fields.name}</strong>! Your account has been
+          created.
+        </p>
+
+        <button
+          className="btn btn-primary"
+          onClick={handleReset}
+        >
           Register Another
         </button>
       </div>
@@ -95,8 +137,10 @@ export default function FormTask() {
   return (
     <div className="form-container">
       <form onSubmit={handleSubmit} noValidate>
+        {/* Name */}
         <div className="form-group">
           <label htmlFor="name">Full Name</label>
+
           <input
             id="name"
             name="name"
@@ -106,11 +150,16 @@ export default function FormTask() {
             onChange={handleChange}
             className={errors.name ? "input-error" : ""}
           />
-          {errors.name && <span className="error-msg">{errors.name}</span>}
+
+          {errors.name && (
+            <span className="error-msg">{errors.name}</span>
+          )}
         </div>
 
+        {/* Email */}
         <div className="form-group">
           <label htmlFor="email">Email Address</label>
+
           <input
             id="email"
             name="email"
@@ -120,12 +169,17 @@ export default function FormTask() {
             onChange={handleChange}
             className={errors.email ? "input-error" : ""}
           />
-          {errors.email && <span className="error-msg">{errors.email}</span>}
+
+          {errors.email && (
+            <span className="error-msg">{errors.email}</span>
+          )}
         </div>
 
+        {/* Password + Confirm Password */}
         <div className="form-row">
           <div className="form-group">
             <label htmlFor="password">Password</label>
+
             <input
               id="password"
               name="password"
@@ -135,11 +189,17 @@ export default function FormTask() {
               onChange={handleChange}
               className={errors.password ? "input-error" : ""}
             />
-            {errors.password && <span className="error-msg">{errors.password}</span>}
+
+            {errors.password && (
+              <span className="error-msg">
+                {errors.password}
+              </span>
+            )}
           </div>
 
           <div className="form-group">
             <label htmlFor="confirm">Confirm Password</label>
+
             <input
               id="confirm"
               name="confirm"
@@ -149,12 +209,19 @@ export default function FormTask() {
               onChange={handleChange}
               className={errors.confirm ? "input-error" : ""}
             />
-            {errors.confirm && <span className="error-msg">{errors.confirm}</span>}
+
+            {errors.confirm && (
+              <span className="error-msg">
+                {errors.confirm}
+              </span>
+            )}
           </div>
         </div>
 
+        {/* Age */}
         <div className="form-group form-group-sm">
           <label htmlFor="age">Age</label>
+
           <input
             id="age"
             name="age"
@@ -164,10 +231,17 @@ export default function FormTask() {
             onChange={handleChange}
             className={errors.age ? "input-error" : ""}
           />
-          {errors.age && <span className="error-msg">{errors.age}</span>}
+
+          {errors.age && (
+            <span className="error-msg">{errors.age}</span>
+          )}
         </div>
 
-        <button type="submit" className="btn btn-primary btn-full">
+        {/* Submit */}
+        <button
+          type="submit"
+          className="btn btn-primary btn-full"
+        >
           Create Account
         </button>
       </form>

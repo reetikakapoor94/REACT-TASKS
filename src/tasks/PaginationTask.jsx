@@ -5,53 +5,41 @@ import "./PaginationTask.css";
 // ============================================================
 //  TASK 2: Implement Pagination
 // ============================================================
-//
-//  What you need to implement:
-//  1. totalPages   - Calculate the total number of pages
-//                    Hint: Math.ceil(users.length / ITEMS_PER_PAGE)
-//
-//  2. currentUsers - Slice the `users` array to only include
-//                    the items for the current page
-//                    Hint: figure out the start index using currentPage
-//                    and ITEMS_PER_PAGE, then use .slice(start, end)
-//
-//  3. handlePrev() - Go to the previous page (don't go below 1)
-//
-//  4. handleNext() - Go to the next page (don't exceed totalPages)
-//
-//  Hints:
-//  - Page numbers start at 1 (not 0)
-//  - Start index for a page: (currentPage - 1) * ITEMS_PER_PAGE
-//  - ITEMS_PER_PAGE is imported from data/users.js (it's 5)
-//
-//  Bonus challenges:
-//  ★  Show numbered page buttons (1, 2, 3 ...) instead of just Prev/Next
-//  ★★ Add a "Jump to page" input
-//  ★★★ Add a dropdown to change how many items per page are shown
-// ============================================================
 
 export default function PaginationTask() {
   const [currentPage, setCurrentPage] = useState(1);
 
-  // TODO: Calculate totalPages
-  const totalPages = 0; // replace 0 with the correct formula
+  // Calculate total number of pages
+  const totalPages = Math.ceil(users.length / ITEMS_PER_PAGE);
 
-  // TODO: Slice the users array to only the items for the current page
-  const currentUsers = []; // replace [] with the correct slice
+  // Calculate start index for current page
+  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
 
+  // Get users for current page
+  const currentUsers = users.slice(
+    startIndex,
+    startIndex + ITEMS_PER_PAGE
+  );
+
+  // Go to previous page
   function handlePrev() {
-    // TODO: decrease currentPage by 1, but never go below 1
+    setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
   }
 
+  // Go to next page
   function handleNext() {
-    // TODO: increase currentPage by 1, but never exceed totalPages
+    setCurrentPage((prevPage) =>
+      Math.min(prevPage + 1, totalPages)
+    );
   }
 
   return (
     <div className="pagination-container">
       <div className="pagination-info">
-        Showing <strong>{currentUsers.length}</strong> of <strong>{users.length}</strong> users
-        &nbsp;·&nbsp; Page <strong>{currentPage}</strong> of <strong>{totalPages || "?"}</strong>
+        Showing <strong>{currentUsers.length}</strong> of{" "}
+        <strong>{users.length}</strong> users
+        &nbsp;·&nbsp; Page <strong>{currentPage}</strong> of{" "}
+        <strong>{totalPages}</strong>
       </div>
 
       <table className="data-table">
@@ -64,11 +52,12 @@ export default function PaginationTask() {
             <th>City</th>
           </tr>
         </thead>
+
         <tbody>
           {currentUsers.length === 0 ? (
             <tr>
               <td colSpan={5} className="table-empty">
-                No users to show — implement currentUsers above!
+                No users to show
               </td>
             </tr>
           ) : (
@@ -78,7 +67,9 @@ export default function PaginationTask() {
                 <td>{user.name}</td>
                 <td>{user.email}</td>
                 <td>
-                  <span className={`role-badge role-${user.role.toLowerCase()}`}>
+                  <span
+                    className={`role-badge role-${user.role.toLowerCase()}`}
+                  >
                     {user.role}
                   </span>
                 </td>
@@ -99,13 +90,13 @@ export default function PaginationTask() {
         </button>
 
         <span className="page-indicator">
-          {currentPage} / {totalPages || "?"}
+          {currentPage} / {totalPages}
         </span>
 
         <button
           className="btn btn-secondary"
           onClick={handleNext}
-          disabled={currentPage === totalPages || totalPages === 0}
+          disabled={currentPage === totalPages}
         >
           Next →
         </button>

@@ -1,0 +1,92 @@
+.form-container {
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group-sm {
+  max-width: 160px;
+}
+
+label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.form-group input {
+  padding: 10px 14px;
+  border: 2px solid var(--color-border);
+  border-radius: 8px;
+  font-size: 0.95rem;
+  outline: none;
+  background: white;
+  transition: border-color 0.2s;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.form-group input:focus {
+  border-color: var(--color-primary);
+}
+
+.form-group input.input-error {
+  border-color: #ef4444;
+  background: #fff5f5;
+}
+
+.error-msg {
+  font-size: 0.8rem;
+  color: #ef4444;
+  font-weight: 500;
+}
+
+.btn-full {
+  width: 100%;
+  padding: 12px;
+  font-size: 1rem;
+  margin-top: 4px;
+}
+
+.form-success {
+  text-align: center;
+  padding: 40px 20px;
+  background: white;
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.success-icon {
+  font-size: 3rem;
+  margin-bottom: 16px;
+}
+
+.form-success h3 {
+  margin: 0 0 8px;
+  font-size: 1.3rem;
+  color: var(--color-text);
+}
+
+.form-success p {
+  color: var(--color-muted);
+  margin-bottom: 24px;
+}

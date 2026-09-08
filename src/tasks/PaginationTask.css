@@ -1,0 +1,79 @@
+.pagination-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.pagination-info {
+  font-size: 0.875rem;
+  color: var(--color-muted);
+  padding: 10px 0;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+}
+
+.data-table th {
+  background: var(--color-bg-alt);
+  padding: 12px 16px;
+  text-align: left;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-muted);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.data-table td {
+  padding: 12px 16px;
+  font-size: 0.9rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.data-table tr:last-child td {
+  border-bottom: none;
+}
+
+.data-table tbody tr:hover {
+  background: #f8fafc;
+}
+
+.table-empty {
+  text-align: center;
+  color: var(--color-muted);
+  padding: 40px !important;
+  font-style: italic;
+}
+
+.role-badge {
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.role-engineer { background: #dbeafe; color: #1e40af; }
+.role-designer { background: #fce7f3; color: #9d174d; }
+.role-manager  { background: #d1fae5; color: #065f46; }
+
+.pagination-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 8px 0;
+}
+
+.page-indicator {
+  font-size: 0.9rem;
+  color: var(--color-muted);
+  min-width: 60px;
+  text-align: center;
+}

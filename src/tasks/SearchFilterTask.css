@@ -1,0 +1,170 @@
+.search-filter-container {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.controls-row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.search-box {
+  position: relative;
+  flex: 1;
+  min-width: 200px;
+}
+
+.search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.9rem;
+}
+
+.search-input {
+  width: 100%;
+  padding: 10px 36px;
+  border: 2px solid var(--color-border);
+  border-radius: 8px;
+  font-size: 0.95rem;
+  outline: none;
+  background: white;
+  box-sizing: border-box;
+  transition: border-color 0.2s;
+}
+
+.search-input:focus {
+  border-color: var(--color-primary);
+}
+
+.clear-btn {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--color-muted);
+  font-size: 0.85rem;
+  padding: 2px 4px;
+}
+
+.dept-select {
+  padding: 10px 14px;
+  border: 2px solid var(--color-border);
+  border-radius: 8px;
+  font-size: 0.95rem;
+  outline: none;
+  background: white;
+  cursor: pointer;
+  color: var(--color-text);
+  min-width: 160px;
+  transition: border-color 0.2s;
+}
+
+.dept-select:focus {
+  border-color: var(--color-primary);
+}
+
+.results-count {
+  font-size: 0.875rem;
+  color: var(--color-muted);
+  margin: 0;
+}
+
+.employee-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.employee-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 18px;
+  background: white;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  transition: box-shadow 0.15s;
+}
+
+.employee-card:hover {
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+
+.emp-avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--color-primary), #818cf8);
+  color: white;
+  font-weight: 700;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.emp-details {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.emp-name {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--color-text);
+}
+
+.emp-role {
+  font-size: 0.8rem;
+  color: var(--color-muted);
+}
+
+.dept-badge {
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.dept-engineering { background: #dbeafe; color: #1e40af; }
+.dept-design      { background: #fce7f3; color: #9d174d; }
+.dept-management  { background: #d1fae5; color: #065f46; }
+.dept-marketing   { background: #fef3c7; color: #92400e; }
+.dept-hr          { background: #ede9fe; color: #4c1d95; }
+
+.emp-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+}
+
+.emp-salary {
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--color-text);
+}
+
+.emp-exp {
+  font-size: 0.78rem;
+  color: var(--color-muted);
+}
+
+.no-results {
+  text-align: center;
+  padding: 40px;
+  color: var(--color-muted);
+  background: white;
+  border: 2px dashed var(--color-border);
+  border-radius: 10px;
+}
